@@ -50,3 +50,54 @@ const r2 = new IntersectionObserver((ents)=>{
   });
 },{threshold:.25});
 document.querySelectorAll('.reveal').forEach(el=>r2.observe(el));
+
+// Two-step form behavior
+document.querySelectorAll('.form.two-step').forEach(form=>{
+  const step1=form.querySelector('.step-1');
+  const step2=form.querySelector('.step-2');
+  const next=form.querySelector('.next');
+  const prev=form.querySelector('.prev');
+  const dots=form.querySelectorAll('.dots span');
+  function setStep(n){
+    if(n===1){
+      step1.classList.add('active'); step2.hidden=true; step2.classList.remove('active');
+      dots[0].classList.add('on'); dots[1].classList.remove('on');
+    }else{
+      step1.classList.remove('active'); step2.hidden=false; step2.classList.add('active');
+      dots[0].classList.remove('on'); dots[1].classList.add('on');
+    }
+  }
+  next&&next.addEventListener('click', ()=>{
+    if(form.reportValidity()){ setStep(2); }
+  });
+  prev&&prev.addEventListener('click', ()=>setStep(1));
+  setStep(1);
+});
+
+// UTM capture for forms
+(function(){
+  const params = new URLSearchParams(location.search);
+  const utm = {
+    utm_source: params.get('utm_source') || 'site',
+    utm_medium: params.get('utm_medium') || 'web',
+    utm_campaign: params.get('utm_campaign') || 'default',
+    utm_content: params.get('utm_content') || ''
+  };
+  document.querySelectorAll('form[data-utm-capture="true"]').forEach(form=>{
+    ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(k=>{
+      const input = form.querySelector(`input[name="${k}"]`);
+      if(input){ input.value = utm[k] }
+    });
+  });
+})();
+
+// Lightweight event tracking (GA4-compatible dataLayer fallback)
+window.dataLayer = window.dataLayer || [];
+function track(event, params){ try{ window.dataLayer.push(Object.assign({event}, params||{})); }catch(e){ console.log('track', event, params); } }
+
+// Bind clicks
+document.querySelectorAll('.btn-cta,.sticky-cta,a[href*="t.me/"]').forEach(el=>{
+  el.addEventListener('click', ()=>track('cta_click', {id: el.textContent.trim() || el.getAttribute('aria-label') || 'cta'}));
+});
+// Form submit
+document.querySelectorAll('form').forEach(f=>f.addEventListener('submit', ()=>track('lead_submit', {form: f.getAttribute('name')||'form'})));
