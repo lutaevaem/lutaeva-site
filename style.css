@@ -54,3 +54,6 @@ textarea{resize:vertical}
 @media (max-width:980px){.cards{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr}.about-badges{grid-template-columns:repeat(5,auto)}}
 @media (max-width:640px){.section{padding:72px 0}.cards{grid-template-columns:1fr}.cta-row{flex-direction:column;align-items:flex-start}.form .row{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+.center{text-align:center;}
+.card.center p{text-align:center;}
