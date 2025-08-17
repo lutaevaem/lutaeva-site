@@ -12,3 +12,29 @@ function animateNumber(el){
 }
 const io=new IntersectionObserver((entries)=>entries.forEach(e=>{ if(e.isIntersecting){ animateNumber(e.target); io.unobserve(e.target);} }), {threshold:.6});
 document.querySelectorAll('[data-to]').forEach(el=>io.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    const answer = document.getElementById(btn.getAttribute('aria-controls'));
+    if(answer){ answer.hidden = expanded; }
+  });
+});
+
+// Reveal on scroll
+const revealEls = document.querySelectorAll('.reveal');
+const rio = new IntersectionObserver((ents)=>{
+  ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); rio.unobserve(e.target);} });
+},{threshold:.25});
+revealEls.forEach(el=>rio.observe(el));
+
+// Scroll to top
+const toTop = document.createElement('button');
+toTop.id = 'toTop'; toTop.setAttribute('aria-label','Наверх'); toTop.innerHTML = '↑';
+document.body.appendChild(toTop);
+window.addEventListener('scroll', ()=>{
+  toTop.classList.toggle('show', window.scrollY > 600);
+},{passive:true});
+toTop.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
