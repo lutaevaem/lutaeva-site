@@ -33,7 +33,7 @@
     <section class="section hero center" id="home" aria-label="Hero">
       <div class="hero-content">
         <h1>CHRO/HRD. Укрепляю команды и ускоряю рост бизнеса</h1>
-        <p class="lead">Топ-менеджер международного холдинга 8000+. +281% выручки за 2 года; HR-системы и BI-аналитика.</p>
+        <p class="lead"><span id="typed"></span></p>
         <div class="cta-row center">
           <a href="#contact" class="btn btn-cta">Записаться на консультацию</a>
           <a href="#cases" class="btn btn-ghost">Посмотреть кейсы</a>
@@ -88,6 +88,22 @@
         <div class="cta-row center" style="margin-top:22px">
           <a href="#contact" class="btn btn-cta">Обсудить задачу</a>
         </div>
+      </div>
+    </section>
+
+    <!-- MINI-LEAD -->
+    <section class="section mini-lead reveal" id="quick" aria-labelledby="quick-title">
+      <div class="container center">
+        <h2 id="quick-title">Опишите задачу — ответ в течение 24 часов</h2>
+        <form class="form form-inline" name="quick" method="POST" data-netlify="true">
+          <input type="hidden" name="form-name" value="quick">
+          <input name="name" placeholder="Имя" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <input name="company" placeholder="Компания">
+          <input name="topic" placeholder="Тема (3–5 слов)">
+          <button class="btn btn-cta" type="submit">Отправить</button>
+        </form>
+        <p class="muted">Без спама. Только по существу и с вариантами решения.</p>
       </div>
     </section>
 
@@ -238,5 +254,8 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <button id="stickyCTA" class="sticky-cta" aria-label="Оставить заявку" onclick="location.href='#contact'">✉️</button>
+
 </body>
 </html>
